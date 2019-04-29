@@ -43,7 +43,7 @@
                         <b><%=  pst.title %></b><br>
                         <li class="list-group-item">
                         <i style="font-size:20px;color:red" class="fa">&#xf014;</i>
-                        <i style="font-size:20px" class="fa">&#xf044;</i>
+                        <a href="/post/<%= pst._id %>"> <i style="font-size:20px" class="fa">&#xf044;</i></a>
                       </li>
                     </li>
               </ul>                       
@@ -76,11 +76,11 @@
                                      </div>
                                   </div>
                             <%  } %>
-                            <li class="list-group-item">           
+                              <li class="list-group-item">           
 
-                            <i style="font-size:20px;color:red" class="fa">&#xf014;</i>
-                            <i style="font-size:20px" class="fa">&#xf044;</i>
-                            </li>
+                              <i style="font-size:20px;color:red" class="fa">&#xf014;</i>
+                              <a href="/task/<%= tsk.id %>"> <i style="font-size:20px" class="fa">&#xf044;</i></a>
+                              </li>
                             </li>
                             </ul>
                           

@@ -13,18 +13,27 @@ router.get("/:id", function(req, res) {
    })
 });
 
-router.post("/:id/update", function (req, res) {
+router.put("/:id", function (req, res) {
    var pstId = req.params.id;
-   posts.findByIdAndUpdate(pstId, {
-      title: "bnei yehuda"
-   }, function (err, pst) {
-      console.log(pst);
+   var newPost =  {
+      title: req.body.title,
+      body: req.body.body
+   }
+
+   posts.findByIdAndUpdate(pstId, newPost, function (err, pst) {
+      console.log("post no. " + pst.id + " Updated!!!");
       res.redirect('/');
    })
 })
 
-router.post("/:id/delete", function (req, res) {
+router.delete("/:id", function (req, res) {
    var pstId = req.params.id;
+
+   posts.findByIdAndDelete(pstId, function (err, pst) {
+      console.log("post no. " + pst.id + " Deleted!!!");
+      res.redirect('/');
+   })
+
    
 })
 
