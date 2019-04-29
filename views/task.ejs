@@ -1,0 +1,41 @@
+
+    <% include partials/header %>
+
+    <div class="panel panel-info">
+        <div class="panel-heading">Task Details:</div>
+        <div class="panel-body">
+  
+              <% det.forEach(tsk => { %>
+                      <% if  (tsk.id  == id) { %>
+                              <% if  (tsk.completed == true) { %>
+                                <div class="progress">
+                                    <div class="progress-bar progress-bar-success" role="progressbar" style="width:100%">
+                                      Completed!
+                                    </div>
+                                </div>
+                              <%  } %>
+                              <% if  (tsk.completed == false) { %>
+                                <div class="progress">
+                                    <div class="progress-bar progress-bar-warning" role="progressbar" style="width:40%">
+                                      In Progress......
+                                    </div>
+                                </div>
+                              <%  } %>
+                            <h4> <%= tsk.title %>    </h4>   
+                      <%  } %>
+              <%  }) %>
+                      <div>
+                                
+                          <button type="button" class="btn btn-primary">Update</button>
+                          <button type="button" class="btn btn-danger">Delete</button>
+                        
+          </div>
+  
+        </div>
+      </div>
+                  
+  
+  
+  
+      <% include partials/footer %>
+  

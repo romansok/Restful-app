@@ -1,0 +1,30 @@
+
+    <% include partials/header %>
+
+  <div class="panel panel-info">
+      <div class="panel-heading">User Details:</div>
+      <div class="panel-body">
+
+            <% det.forEach(usr => { %>
+                <% if  (usr.id  == id) { %>
+                    <h4> <%= usr.name %>    </h4>
+                    <h4> <%= usr.address.city %>    </h4>
+                    <h4> <%= usr.email %>    </h4>
+                        <h4> <%= usr.phone %>    </h4>
+        
+                <%  } %>
+            <%  }) %>
+                    <div>
+                              
+                        <button type="button" class="btn btn-success">Update</button>
+                        <button type="button" class="btn btn-danger">Delete</button>
+                      
+                </div>
+
+      </div>
+    </div>
+                
+
+
+
+    <% include partials/footer %>

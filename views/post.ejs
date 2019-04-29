@@ -1,0 +1,30 @@
+
+    <% include partials/header %>
+
+    <div class="panel panel-info">
+        <div class="panel-heading">Post Details:</div>
+        <div class="panel-body">
+            <form action="/post/<%= id %>/update" method="POST">
+                <div class="form-group">
+                <% det.forEach(pst => { %>
+                    <% if  (pst.id  == id) { %>
+                        <label for="title">Title:</label>
+                        <textarea type="text" class="form-control" id="usr"><%= pst.title %></textarea> 
+                        <label for="body">  Body:  :</label>
+                        <textarea class="form-control" rows="5" id="comment"><%= pst.body %></textarea>
+                    <%  } %>
+                <%  }) %>
+                    <div>                                
+                        <button  type="submit" class="btn btn-success">Update</button>
+                        <button type="button" class="btn btn-danger">Delete</button>
+                    </div>
+
+                </div>
+            </form>
+  
+        </div>
+      </div>
+                  
+  
+      <% include partials/footer %>
+  
