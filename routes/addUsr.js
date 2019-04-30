@@ -1,6 +1,6 @@
 var express = require('express');
 var router = express.Router();
-var users = require('../models/users');
+var usersModel = require('../models/usersModel');
 
 /* GET users listing. */
 router.get('/', function(req, res) {
@@ -8,7 +8,7 @@ router.get('/', function(req, res) {
 });
 
 router.post('/', function (req,res) {
-  users.countDocuments({}, function (err, count) {
+  usersModel.users.countDocuments({}, function (err, count) {
     if (err) console.log(err)
     else {
       console.log(req.body)
@@ -19,7 +19,7 @@ router.post('/', function (req,res) {
         address: {city: req.body.city},
         phone: 'NA'
       }
-      users.create(newUsr, function (err, created) {
+      usersModel.users.create(newUsr, function (err, created) {
         if (err) {
         console.log(err);
         } else {

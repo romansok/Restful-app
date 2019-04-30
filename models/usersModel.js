@@ -1,34 +1,61 @@
-/*var axios = require("axios");
-var json = require('jsonfile');
-var users = require('../models/usersModel')
+var mongoose = require('mongoose');
 
+var Schema = mongoose.Schema;
 
-exports.getUsers = function() {
-  var prom = new Promise(resolve => {
-    users.find({}, function(err, users){
-      console.log(users);
-      if (err) console.log(err)
-      else{
-        resolve()
+var postsSchema = new Schema({
+
+   userId : Number,
+   id: Number,
+   title: String,
+   body: String   
+});
+
+var tasksSchema = new Schema({
+
+   userId : Number,
+   id: Number,
+   title: String,
+   completed: Boolean
+});
+
+var userSchema = new Schema({
+
+   id: Number,
+   name: String,
+   username: String,
+   email: String,
+   address: {
+      street: String,
+      suite: String,
+      city: String,
+      zipcode: String,
+      geo: {
+         lat: String,
+         lng: String,
       }
-    })
-    // axios.get("https://jsonplaceholder.typicode.com/users")
-      .then(data => resolve(data));
-  });
+   },
+   phone: String,
+   website: String,
+   company: {
+      name: String,
+      catchPhrase: String,
+      bs: String
+   },
+   posts: [postsSchema],
+   tasks: [tasksSchema]
+});
 
-  return prom;
-};
+var users = mongoose.model("users" , userSchema);
+var posts = mongoose.model("posts" , postsSchema);
+var tasks = mongoose.model("tasks" , tasksSchema);
 
-exports.getUserId = function(id) {
-  var prom = new Promise(resolve => {
-    axios.get("https://jsonplaceholder.typicode.com/users/").
-    then(usersData => {
-      var user = usersData.data.filter(u => (u.id == id));
-      resolve(user);
-    });
-  });
+var usersModel = {
+   users,
+   posts,
+   tasks,
+}
+module.exports = usersModel;
 
-  return prom; 
-};
-*/
+
+
 

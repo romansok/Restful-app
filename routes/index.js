@@ -1,28 +1,28 @@
 var express = require('express');
 var router = express.Router();
+var usersModel = require('../models/usersModel');
 
-var posts = require('../models/posts');
-var users = require('../models/users');
-var tasks = require('../models/tasks');
 
 
 
 /* GET home page. */
 router.get('/', function(req, res) {
-   users.find({}, function(err,pers) {
+   usersModel.users.find({}, function(err, usr) {
       if(err) res.send(err);
-       else {
-         posts.find({}, function (req, posts) {
-            if(err) res.send(err);
-            else {
-               tasks.find({}, function (req,tasks) {
-                  if (err) res.send (err);
-                  else {
-                     res.render('index',{usrData: pers, pstData: posts, tskData: tasks })
-                  }
-               })
-            }
-         })
+         else {
+            res.render('index', {usersData: usr })
+            /*
+            posts.find({}, function (req, posts) {
+               if(err) res.send(err);
+               else {
+                  tasks.find({}, function (req,tasks) {
+                   if (err) res.send (err);
+                     else {
+                        res.render('index',{usrData: pers, pstData: posts, tskData: tasks })
+                   }
+                  })
+               }
+         })*/
       }
    })
 })

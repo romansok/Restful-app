@@ -1,6 +1,6 @@
 var express = require('express');
 var router = express.Router();
-var tasks = require('../models/tasks');
+var usersModel = require('../models/usersModel');
 
 /* GET users listing. */
 router.get('/:id', function(req, res) {
