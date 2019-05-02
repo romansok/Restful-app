@@ -4,26 +4,37 @@
   <div class="panel panel-info">
       <div class="panel-heading">User Details:</div>
       <div class="panel-body">
-        <form action="/user/<%= id %>?_method=PUT" method="POST">
+        <form action="/user/<%= usr._id %>?_method=PUT" method="POST">
             <div class="form-group">
-            <% det.forEach(usr => { %>
-                <% if  (usr.id  == id) { %>
                     <label for="title">Name:</label>
                         <input type="text" class="form-control" name="name" value="<%= usr.name %>">
                     <label for="title">City:</label>
                         <input type="text" class="form-control" name="city" value="<%= usr.address.city %>">
                     <label for="title">Email:</label>
                         <input type="text" class="form-control" name="email" value="<%= usr.email %>">
-                    <label for="title">Phone:</label>
-                        <input type="text" class="form-control" name="phone" value="<%= usr.phone %>">
-                <%  } %>
-            <%  }) %><br>
-            <button  type="submit" class="btn btn-success">Update</button>                                          
-        </div>
-    </form>
-    <form action="/user/<%= id %>?_method=DELETE" method="POST">
-        <button type="submit" class="btn btn-danger">Delete</button>
-    </form> 
+                    <label for="title">New Phone:</label>
+                   
+                        <button class="btn btn-primary" type="button" data-toggle="collapse" data-target="#collapsed" aria-expanded="false" aria-controls="collapsed">
+                          Click here to add a new phone
+                        </button>
+                      
+                      <div class="collapse" id="collapsed">
+                        <div class="card card-body">
+                            <input type="text" class="form-control" name="phone" placeholder="Add new phone here">                      
+                            <select class="form-control" name="phoneType" style="width: 200px;">                                               
+                                  <option value="home">Home</option>
+                                  <option value="office">Office</option>
+                                  <option value="mobile">Mobile</option>
+                            </select>
+                        </div>
+                      </div>
+                <br>
+                <button  type="submit" class="btn btn-success">Update</button>                                          
+            </div>
+        </form>
+        <form action="/user/<%= usr._id %>?_method=DELETE" method="POST">
+            <button type="submit" class="btn btn-danger">Delete</button>
+        </form> 
 
       </div> 
     </div>

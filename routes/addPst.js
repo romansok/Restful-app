@@ -4,33 +4,28 @@ var usersModel = require('../models/usersModel');
 
 /* GET users listing. */
 router.get('/:id', function(req, res) {
-console.log(req.params.id)
-res.render('addPst', {id: req.params.id})
+  res.render('addPst', {id: req.params.id})
 });
 
+/* POST request for new post*/
 router.post('/:id', function (req,res) {
-  posts.countDocuments({}, function (err, count) {
+  usersModel.findById( req.params.id, function (err, user) {
     if (err) console.log(err)
-    else {
-      console.log(req.body)
-      var newPst = {
-        userId: req.params.id,
-        id: count + 1,
-        title: req.body.title,
-        body: req.body.body
-      }
-      posts.create(newPst, function (err, created) {
-        if (err) {
-        console.log(err);
-        } else {
-          console.log(created);
-          res.redirect("../")
-        }
-      })
-    }    
-  })
+    var newPst = {
+      userId: req.params.id,
+      title: req.body.title,
+      body: req.body.body
+    }
+    user.posts.push(newPst);
+    user.save(function (err, created) {
+      if (err) console.log(err)
+      else
+        console.log("new post added for " + user.name)
+        res.redirect('/')
+    })
+  }) 
+  
 })
 
-router.put('')
 
 module.exports = router;

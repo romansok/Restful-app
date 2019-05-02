@@ -8,26 +8,17 @@ router.get('/', function(req, res) {
 });
 
 router.post('/', function (req,res) {
-  usersModel.users.countDocuments({}, function (err, count) {
-    if (err) console.log(err)
-    else {
-      console.log(req.body)
-      var newUsr = {
-        id: count + 1,
-        name: req.body.name,
-        email: req.body.email,
-        address: {city: req.body.city},
-        phone: 'NA'
+  var newUsr = {
+    name: req.body.name,
+    email: req.body.email,
+    address: {city: req.body.city},
+  }
+  usersModel.create(newUsr, function (err, created) {
+    if (err) console.log(err);
+      else {
+        console.log("new user:\n" + created);
+        res.redirect("/")
       }
-      usersModel.users.create(newUsr, function (err, created) {
-        if (err) {
-        console.log(err);
-        } else {
-            console.log(created);
-          res.redirect("/")
-        }
-      })
-    }    
   })
 })
 

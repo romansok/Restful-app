@@ -3,11 +3,8 @@
 
   <table class="table table-hover">
     <thead>
-      <h3>The Users Are:</h3> <br>
         <tr>
           <th>Name</th>
-          <th>Email</th>
-          <th>City</th>
           <th>Phone</th>
           <th>Posts</th>
           <th>Tasks</th>
@@ -18,43 +15,70 @@
        <% usersData.forEach(usr => { %>
           <tr>
             <td>
-              <div class="dropdown">
-                  <button class="btn btn-primary dropdown-toggle" type="button" data-toggle="dropdown"> <%= usr.name %>
-                    <span class="caret"></span></button>
-                      <ul class="dropdown-menu">
-                        <li><a href="/user/<%= usr.id %>">User Details</a></li>
-                        <li><a href="/add_post/<%= usr.id %>">Add Post</a></li>
-                        <li><a href="/add_task/<%= usr.id %>">Add Task</a></li>                                             
-                      </ul>
-              </div>
+                <div class="col-sm-6 col-md-8">
+                    <h4>
+                        <%= usr.name %></h4>
+                    <small><cite title="San Francisco, USA"><%= usr.address.city %><i class="glyphicon glyphicon-map-marker">
+                    </i></cite>
+                  </small>
+                    <p>
+                        <i class="glyphicon glyphicon-envelope"><%= usr.email %></i>
+                        
+                    </p>       
+                </div>
+               
+                  <div class="btn-group-vertical">
+                    <a href="/user/<%= usr._id %>">
+                    <button type="button" class="btn btn-primary btn-sm">
+                      User Details
+                    </button></a>
+                    <a href="/add_post/<%= usr._id %>">
+                    <button  type="button" class="btn btn-primary btn-sm">Add Post
+                      </button></a>
+                      <a href="/add_task/<%= usr._id %>">
+                    <button type="button" class="btn btn-primary btn-sm">
+                      Add Task
+                    </button></a>
+                  </div>   
             </td>
-
-            <td> <%= usr.email %> </td>
-            <td> <%= usr.address.city %> </td>
-            <td> <%= usr.phone %> </td>
+   
+            <td>  
+              <% usr.phones.forEach(phone => { %>
+                      
+            <ul class="list-group">
+                  <li class="list-group-item">                                        
+                      <%=  phone.phoneNumber %>
+                      <% if  (phone.phoneType == "mobile") { %>
+                        <i class="fa fa-mobile" aria-hidden="true"></i>
+                      <%  } %>
+                      <% if  (phone.phoneType == "home") { %>
+                        <i class="fas fa-phone"></i>
+                      <%  } %>
+                      <% if  (phone.phoneType == "office") { %>
+                        <i class="fas fa-tty"></i>          
+                      <%  } %>
+                  </li>
+            </ul>                                   
+                  <%  }) %>
+          </td>
 
             <td>  
                 <% usr.posts.forEach(pst => { %>
-                        <% if  (pst.userId  == usr.id) { %>    
+                        
               <ul class="list-group">
                     <li class="list-group-item">                                        
                         <b><%=  pst.title %></b><br>
                         <li class="list-group-item">
-                        <i style="font-size:20px;color:red" class="fa">&#xf014;</i>
-                        <a href="/post/<%= pst._id %>"> <i style="font-size:20px" class="fa">&#xf044;</i></a>
+                        <a href="/post/<%= usr._id %>/<%= pst._id %>"> <i style="font-size:20px" class="fa">&#xf044;</i></a>
                       </li>
                     </li>
-              </ul>                       
-                                
-                        <%  } %>
+              </ul>                                   
                     <%  }) %>
-         
             </td>
 
             <td>
-            
                   <% usr.tasks.forEach(tsk => { %>
-                      <% if  (tsk.userId  == usr.id) { %>
+                      
                         <ul class="list-group">
                             <li class="list-group-item">           
                             <%=  tsk.title %>  <br> <br>
@@ -75,15 +99,10 @@
                                   </div>
                             <%  } %>
                               <li class="list-group-item">           
-
-                              <i style="font-size:20px;color:red" class="fa">&#xf014;</i>
-                              <a href="/task/<%= tsk._id %>"> <i style="font-size:20px" class="fa">&#xf044;</i></a>
+                              <a href="/task/<%= usr._id %>/<%= tsk._id %>"> <i style="font-size:20px" class="fa">&#xf044;</i></a>
                               </li>
                             </li>
                             </ul>
-                          
-                     
-                      <%  } %>
                   <% }) %>
              
                            

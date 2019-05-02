@@ -4,23 +4,28 @@ var Schema = mongoose.Schema;
 
 var postsSchema = new Schema({
 
-   userId : Number,
-   id: Number,
+   userId : Schema.ObjectId,
    title: String,
    body: String   
 });
 
 var tasksSchema = new Schema({
 
-   userId : Number,
-   id: Number,
+   userId : Schema.ObjectId,
    title: String,
    completed: Boolean
 });
 
+var phonesSchema = new Schema({
+
+   userID : Schema.ObjectId,
+   phoneType : String,
+   phoneNumber : String
+});
+
+
 var userSchema = new Schema({
 
-   id: Number,
    name: String,
    username: String,
    email: String,
@@ -34,7 +39,6 @@ var userSchema = new Schema({
          lng: String,
       }
    },
-   phone: String,
    website: String,
    company: {
       name: String,
@@ -42,19 +46,12 @@ var userSchema = new Schema({
       bs: String
    },
    posts: [postsSchema],
-   tasks: [tasksSchema]
+   tasks: [tasksSchema],
+   phones: [phonesSchema]
 });
 
-var users = mongoose.model("users" , userSchema);
-var posts = mongoose.model("posts" , postsSchema);
-var tasks = mongoose.model("tasks" , tasksSchema);
-
-var usersModel = {
-   users,
-   posts,
-   tasks,
-}
-module.exports = usersModel;
+   
+module.exports = mongoose.model("users" , userSchema);
 
 
 

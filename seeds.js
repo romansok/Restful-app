@@ -2,101 +2,67 @@ var mongoose = require("mongoose");
 var axios = require('axios');
 var usersModel = require('./models/usersModel');
 
-
 /* todo
 seed files
 */
 
-
-
 exports.seedDB = function() {
-  seedTasks().then(tasks => {
-    seedPosts().then(posts => {
-      usersModel.users.countDocuments({}, function (err, count) {
+  getTasks().then(tasks => {
+    getPosts().then(posts => {
+      usersModel.countDocuments({}, function (err, count) {
         if (err) {
           console.log(err)
         }
         else if(!count) {
-          getUsers()
-            .then(usersData => {
+          getUsers().then(usersData => {
               usersData.data.forEach(user => {
-                usersModel.posts.find({userId: user.id}, function (err, userPosts) {
-                  usersModel.tasks.find({userId: user.id}, function (err, userTasks) {
-                    usersModel.users.create({
-                      id: user.id,
-                      name: user.name,
-                      email: user.email,
-                      address: {
-                        city: user.address.city
-                      } ,
-                      phone: user.phone,
-                      posts: userPosts,
-                      tasks: userTasks
-
-                    }), function (err, created) {
+                    usersModel.create(user, function (err, created) {
                       if (err) console.log(err)
-                      else
-                      console.log("users seeds created")
-                    }                   
-                  })
-                })
+                      else {
+                        posts.data.forEach(pst =>{
+                          if (user.id == pst.userId) {
+                            var newPst = {
+                              userId: created._id,
+                              title: pst.title,
+                              body: pst.body
+                            }
+                            created.posts.push(newPst)                            
+                          }
+                        })
+                        tasks.data.forEach(tsk =>{
+                          if (user.id == tsk.userId) {
+                            var newTsk = {
+                              userId: created._id,
+                              title: tsk.title,
+                              completed: tsk.completed
+                            }
+                            created.tasks.push(newTsk)  
+                          }
+                        })
+                        var newPhone = {
+                          userID : created._id,
+                          phoneType : "office",
+                          phoneNumber : user.phone
+                        }
+                        created.phones.push(newPhone)
+                       
+                        created.save(function (err) {
+                          if (err) console.log(err)
+                          else
+                            console.log("seeds created")
+                        })
+                        
+                      }
+                    })                   
+                  })              
               })
-            });
-        }
-      });
-    })
-  })
-}
-
-function seedTasks() {
-  var prom = new Promise(resolve => {
-
-    usersModel.tasks.countDocuments({}, function (err, count) {
-      if (err) console.log(err)
-      else if(!count)
-      {
-        getTasks()
-          .then(tasksData => {
-            usersModel.tasks.insertMany(tasksData.data, function(err, newTasks){
-              if (err)
-                console.log(err)
-                else {
-                  console.log("tasks seeds created");
-                  resolve(usersModel.tasks)
-                }
-            })
-          })
-        }
-    })
-  })
-  return prom
-}
-
-
-function seedPosts() {
-  var prom = new Promise(resolve => {
-
-      usersModel.posts.countDocuments({}, function (err, count) {
-        if (err) console.log(err)
-        else if(!count)
-        {
-          getPosts()
-            .then(postsData => {
-              usersModel.posts.insertMany(postsData.data, function(err, newPosts){
-                if (err)
-                  console.log(err)
-                  else {
-                    resolve(usersModel.posts)
-                    console.log("posts seeds created");
-                  }
-              })
-            })
-          }
+            }
+        })
       })
-
     })
-      return prom
-}
+  }
+  
+
 
 function getPosts() {
   var prom = new Promise(resolve => {
@@ -121,61 +87,3 @@ function getUsers() {
   });
   return prom;
 }
-
-  
-  /*posts
-  function to get the posts
-  then insert it to the posts collection
-  */
- /*users
-
- 
-
- 
-  
-
-  
-
-
-
-/*
-usersDB.countDocuments({}, function (err, count) {
-    if (err) console.log(err)
-    else if(!count)
-    {
-      users.initDB();
-    }
-  });
-
-
-
-  var axios = require("axios");
-var json = require('jsonfile');
-var usersDB = require('../models/userDBmodel');
-
-
-
-exports.initDB = function() {
-    axios.get("https://jsonplaceholder.typicode.com/users")
-      .then(usersData => {
-       usersData.data.map(user => {
-        usersDB.create({
-          name : user.name,
-          email : user.email,
-          city : user.address.city,
-          phone : user.phone
-        }, (err, usr) =>{
-          if (err){
-              console.log(err)
-          }else{
-              console.log(usr)
-          } 
-        })
-       })
-      
-      });
-
-};
-
-
-*/
